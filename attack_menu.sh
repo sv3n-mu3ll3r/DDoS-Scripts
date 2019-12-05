@@ -1,6 +1,9 @@
 #!/usr/bin/bash
 
+# usage: ./attack_menu.sh <IP> <PORT>
+
 hping='/usr/sbin/hping3'
+
 
 echo "*** ATTACK MENU ***"
 echo "******************"
@@ -24,7 +27,7 @@ echo "Target: $IP:$PORT"
 echo ""
 ATTACK='Please chose your attack: '
 options=("SYN-Flood" "PUSH-Flood" "Push/Ack-Flood" "Push/Ack-Flood-with-Timestamp" "SYN/ACK-Flood" "SYN/ACK-Flood-with-Timestamp" "ACK-Flood" "ACK-Flood-with-Timestamp" "ACK-Flood-single_source" "RST-Flood" "FIN-Flood" "UDP-Flood" "UDP-Flood-volumetric" "UDP-Flood-fragmented" "ICMP-Flood" "ICMP-Flood-volumetric" "BlackNurse1" "BlackNurse2" "BlackNurse3" "BlackNurse4" "X-MAS-Flood" "Y-MAS-Flood" "Quit")
-#options=("SYN-Flood" "PUSH-Flood" "Push/Ack-Flood" "Push/Ack-Flood-with-Timestamp" "SYN/ACK-Flood" "SYN/ACK-Flood-with-Timestamp" "ICMP-Flood" "ICMP-Flood-volumetric" "ACK-Flood" "ACK-Flood-with-Timestamp" "ACK-Flood-single_source" "RST-Flood" "FIN-Flood" "UDP-Flood" "UDP-Flood-volumetric" "UDP-Flood-fragmented" "BlackNurse1" "BlackNurse2" "BlackNurse3" "BlackNurse4" "X-MAS-Flood" "Y-MAS-Flood" "Quit")
+
 select opt in "${options[@]}"
 do
     case $opt in
