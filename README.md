@@ -2,5 +2,5 @@
  This repository contains DDOS scripts
  
  attack_menu.sh: provides menu driven L3/4 attacks.
- usage: ./attach_menu.sh <IP> <PORT>
+ usage: ./attack_menu.sh <IP> <PORT>
  
